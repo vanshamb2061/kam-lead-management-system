@@ -1,5 +1,6 @@
 package com.assessment.kam.dto;
 
+import com.assessment.kam.enums.CallFrequency;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ public class CallPlannerDTO {
 
     @NotNull(message = "Call frequency is mandatory")
 //    TODO: Move this to enum
-    private String callFrequency;
+    private CallFrequency callFrequency;
 
     @NotNull(message = "Last call date cannot be null")
     @PastOrPresent(message = "Last call date must be in the past or present")

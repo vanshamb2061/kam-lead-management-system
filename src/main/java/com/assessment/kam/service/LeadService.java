@@ -2,6 +2,7 @@ package com.assessment.kam.service;
 
 import com.assessment.kam.dto.LeadDTO;
 import com.assessment.kam.dto.PointOfContactDTO;
+import com.assessment.kam.enums.CallFrequency;
 import com.assessment.kam.factory.LeadFactory;
 import com.assessment.kam.factory.PointOfContactFactory;
 import com.assessment.kam.model.Lead;
@@ -47,7 +48,7 @@ public class LeadService {
         lead.setPointsOfContact(contacts);
         lead = leadRepository.save(lead);
         //TODO: WEEKLY is default here, this can be updated by user later using update endpoint in callplannercontroller
-        callPlannerService.createCallPlannerForLead(lead, "weekly");
+        callPlannerService.createCallPlannerForLead(lead, CallFrequency.WEEKLY);
         return convertToDTO(lead);
     }
 

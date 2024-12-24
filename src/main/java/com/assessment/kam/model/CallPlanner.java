@@ -1,5 +1,6 @@
 package com.assessment.kam.model;
 
+import com.assessment.kam.enums.CallFrequency;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,14 +19,14 @@ public class CallPlanner {
     @JoinColumn(name = "lead_id", nullable = false)
     private Lead lead;
 
-    private String callFrequency;
+    private CallFrequency callFrequency;
     private LocalDate lastCallDate;
     private LocalDate nextCallDate;
 
     public CallPlanner(){
     }
 
-    public CallPlanner(Lead lead, String callFrequency, LocalDate lastCallDate, LocalDate nextCallDate){
+    public CallPlanner(Lead lead, CallFrequency callFrequency, LocalDate lastCallDate, LocalDate nextCallDate){
         this.lead = lead;
         this.callFrequency = callFrequency;
         this.lastCallDate = lastCallDate;
@@ -40,7 +41,7 @@ public class CallPlanner {
         this.nextCallDate = nextCallDate;
     }
 
-    public void setCallFrequency(String callFrequency) {
+    public void setCallFrequency(CallFrequency callFrequency) {
         this.callFrequency = callFrequency;
     }
 }

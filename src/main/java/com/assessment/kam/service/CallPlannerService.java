@@ -2,10 +2,12 @@ package com.assessment.kam.service;
 
 import com.assessment.kam.dto.CallPlannerDTO;
 import com.assessment.kam.dto.LeadDTO;
+import com.assessment.kam.enums.CallFrequency;
 import com.assessment.kam.factory.CallPlannerFactory;
 import com.assessment.kam.model.CallPlanner;
 import com.assessment.kam.model.Lead;
 import com.assessment.kam.repository.CallPlannerRepository;
+import org.aspectj.weaver.ast.Call;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,7 @@ public class CallPlannerService {
     }
 
     @Transactional
-    public void createCallPlannerForLead(Lead lead, String callFrequency) {
+    public void createCallPlannerForLead(Lead lead, CallFrequency callFrequency) {
         CallPlanner callPlanner = CallPlannerFactory.createCallPlanner(lead, callFrequency, LocalDate.now(), calculateNextCallDate(LocalDate.now(), callFrequency));
         callPlannerRepository.save(callPlanner);
     }
@@ -48,7 +50,7 @@ public class CallPlannerService {
         LocalDate lastCallDate = LocalDate.from(date);
         callPlanner.setLastCallDate(lastCallDate);
 
-        String callFrequency = callPlanner.getCallFrequency();
+        CallFrequency callFrequency = callPlanner.getCallFrequency();
         LocalDate nextCallDate = calculateNextCallDate(lastCallDate,callFrequency);
 
         callPlanner.setNextCallDate(nextCallDate);
@@ -68,7 +70,7 @@ public class CallPlannerService {
     }
 
     @Transactional
-    public CallPlannerDTO updateCallFrequency(Long leadId, String callFrequency) {
+    public CallPlannerDTO updateCallFrequency(Long leadId, CallFrequency callFrequency) {
         CallPlanner callPlanner = callPlannerRepository.findByLeadId(leadId)
                 .orElseThrow(() -> new RuntimeException("Call planner not found for leadId: " + leadId));
 
@@ -84,9 +86,9 @@ public class CallPlannerService {
 
 
 
-    private LocalDate calculateNextCallDate(LocalDate lastCallDate, String callFrequency) {
+    private LocalDate calculateNextCallDate(LocalDate lastCallDate, CallFrequency callFrequency) {
         LocalDate nextCallDate = LocalDate.now();
-        switch (callFrequency.toLowerCase()) {
+        switch (callFrequency.toString().toLowerCase()) {
             case "daily":
                 nextCallDate = lastCallDate.plusDays(1);
                 break;
