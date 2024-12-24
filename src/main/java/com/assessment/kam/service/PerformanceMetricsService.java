@@ -75,15 +75,18 @@ public class PerformanceMetricsService {
     @Transactional
     public void updateMetricsForOrder(Long leadId, Long orderId, double orderValue, LocalDateTime orderDate) {
         Optional<PerformanceMetrics> metricsOptional = performanceMetricsRepository.findByLeadId(leadId);
-        if(metricsOptional.isPresent()){
-            PerformanceMetrics metrics = metricsOptional.get();
-            metrics.setLeadId(leadId);
-            metrics.setOrderCount(metrics.getOrderCount() + 1);
-            metrics.setTotalRevenue(metrics.getTotalRevenue() + orderValue);
-            metrics.setAverageOrderValue(metrics.getTotalRevenue() / metrics.getOrderCount());
-            metrics.setLastOrderDate(orderDate);
-            performanceMetricsRepository.save(metrics);
+        PerformanceMetrics metrics;
+        if(metricsOptional.isPresent()) {
+            metrics = metricsOptional.get();
+        } else {
+            metrics = PerformanceMetricsFactory.createPerformanceMetrics(leadId,0,0,0,LocalDateTime.now());
         }
+        metrics.setLeadId(leadId);
+        metrics.setOrderCount(metrics.getOrderCount() + 1);
+        metrics.setTotalRevenue(metrics.getTotalRevenue() + orderValue);
+        metrics.setAverageOrderValue(metrics.getTotalRevenue() / metrics.getOrderCount());
+        metrics.setLastOrderDate(orderDate);
+        performanceMetricsRepository.save(metrics);
     }
 
     public List<Long> getWellPerformingLeads() {
