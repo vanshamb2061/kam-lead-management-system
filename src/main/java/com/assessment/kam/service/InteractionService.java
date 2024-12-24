@@ -27,18 +27,26 @@ public class InteractionService {
     private LeadRepository leadRepository;
 
     @Transactional
-    public Interaction createInteraction(InteractionDTO interactionDTO) {
-        //TODO: ADD CHECK HERE THAT CALL DATE IS BEFORE CURR DATE
+    public InteractionDTO createInteraction(InteractionDTO interactionDTO) {
         Lead lead = leadRepository.findById(interactionDTO.getLeadId())
                 .orElseThrow(() -> new RuntimeException("Lead not found"));
         Interaction interaction = InteractionFactory.createInteraction(lead,interactionDTO.getDescription(),interactionDTO.getDate() != null ? interactionDTO.getDate() : LocalDateTime.now());
         //TODO: Add validation to ensure lead and POC are from same restaurant
         interaction = interactionRepository.save(interaction);
         callPlannerService.updateCallPlannerForLead(lead, interactionDTO.getDate());
-        return interaction;
+        return convertToDTO(interaction);
     }
 
-    public List<Interaction> getInteractionsByLead(Long leadId) {
-        return interactionRepository.findByLeadId(leadId);
+    public List<InteractionDTO> getInteractionsByLead(Long leadId) {
+        List<Interaction> interactions = interactionRepository.findByLeadId(leadId);
+        return interactions.stream().map(this::convertToDTO).toList();
+    }
+
+    public InteractionDTO convertToDTO(Interaction interaction){
+        InteractionDTO interactionDTO = new InteractionDTO();
+        interactionDTO.setDate(interaction.getDate());
+        interactionDTO.setDescription(interaction.getDescription());
+        interactionDTO.setLeadId(interaction.getLead().getId());
+        return interactionDTO;
     }
 }
