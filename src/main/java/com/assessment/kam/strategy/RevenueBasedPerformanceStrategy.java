@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//TODO: Service annotation needed?
 public class RevenueBasedPerformanceStrategy implements PerformanceStrategy {
 
     @Autowired

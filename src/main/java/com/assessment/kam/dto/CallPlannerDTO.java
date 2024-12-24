@@ -14,7 +14,6 @@ public class CallPlannerDTO {
     private Long leadId;
 
     @NotNull(message = "Call frequency is mandatory")
-//    TODO: Move this to enum
     private CallFrequency callFrequency;
 
     @NotNull(message = "Last call date cannot be null")

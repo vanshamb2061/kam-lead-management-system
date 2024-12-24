@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//TODO: See if annotation is needed
 public class OrderBasedPerformanceStrategy implements PerformanceStrategy {
 
     @Autowired

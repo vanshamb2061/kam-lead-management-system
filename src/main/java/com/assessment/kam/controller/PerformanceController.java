@@ -20,15 +20,6 @@ import java.util.List;
 public class PerformanceController {
 
     @Autowired
-    private RevenueBasedPerformanceStrategy revenueBasedPerformanceStrategy;
-
-    @Autowired
-    private PerformanceContext performanceContext;
-
-    @Autowired
-    private OrderBasedPerformanceStrategy orderBasedPerformanceStrategy;
-
-    @Autowired
     private LeadService leadService;
 
     @Autowired
