@@ -82,17 +82,10 @@ The **KAM (Key Account Manager) Lead Management System** is a Spring Boot applic
 
 ### Development Environment
 1. Start the application
-2. Access the application:
+2. DataLoader class will insert some sample data into the database
+3. Access the application:
     - API Base URL: `http://localhost:8080`
     - H2 Console (if enabled): `http://localhost:8080/h2-console`
-
-
-## Test Execution Guide
-1. Test cases are not added as of now, they will be added later.
-### Running Unit Tests
-```bash
-mvn test
-```
 
 ---
 
