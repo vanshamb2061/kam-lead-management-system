@@ -26,7 +26,7 @@ The **KAM (Key Account Manager) Lead Management System** is a Spring Boot applic
 
 ## Installation Instructions
 
-1. **Clone the Repository**:
+1. **Clone the Repository or open the project folder inside the ZIP file**:
    ```bash
    git clone https://github.com/yourusername/kam-lead-management.git
    cd kam-lead-management
