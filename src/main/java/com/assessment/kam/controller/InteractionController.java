@@ -5,6 +5,7 @@ import com.assessment.kam.model.Interaction;
 import com.assessment.kam.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -44,6 +45,12 @@ public class InteractionController {
                 })
                 .collect(Collectors.toList());
         return ResponseEntity.ok(interactionDTOList);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException ex) {
+        String errorMessage = "Missing required parameter: " + ex.getParameterName();
+        return ResponseEntity.badRequest().body(errorMessage);
     }
 
 
