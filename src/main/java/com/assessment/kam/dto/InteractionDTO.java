@@ -16,4 +16,10 @@ public class InteractionDTO {
     @NotNull(message = "Interaction date cannot be null")
     @PastOrPresent(message = "Interaction date must be in the past or present")
     private LocalDateTime date;
+
+    public InteractionDTO(Long leadId, String description, LocalDateTime date){
+        this.leadId = leadId;
+        this.description = description;
+        this.date = date;
+    }
 }
