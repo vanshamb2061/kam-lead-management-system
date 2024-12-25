@@ -10,6 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 public class LeadDTO {
+
+    private Long id;
+
     @NotBlank(message = "Lead name is mandatory")
     private String name;
 

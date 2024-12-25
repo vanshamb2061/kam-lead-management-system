@@ -86,6 +86,7 @@ public class LeadService {
 
     public LeadDTO convertToDTO(Lead lead) {
         LeadDTO leadDTO = new LeadDTO();
+        leadDTO.setId(lead.getId());
         leadDTO.setName(lead.getName());
         leadDTO.setAddress(lead.getAddress());
         leadDTO.setStatus(lead.getStatus());
