@@ -47,16 +47,23 @@ public class CallPlannerService {
         CallPlanner callPlanner = callPlannerRepository.findByLeadId(lead.getId())
                 .orElseThrow(() -> new RuntimeException("Call Planner not found for lead: " + lead.getId()));
 
-        LocalDate lastCallDate = LocalDate.from(date);
-        callPlanner.setLastCallDate(lastCallDate);
+        LocalDate lastCallDateInDb = callPlanner.getLastCallDate();
+        LocalDate newLastCallDate = LocalDate.from(date);
+        // Update only if the new date is after the existing last call date
+        if (lastCallDateInDb == null || newLastCallDate.isAfter(lastCallDateInDb)) {
+            callPlanner.setLastCallDate(newLastCallDate);
 
-        CallFrequency callFrequency = callPlanner.getCallFrequency();
-        LocalDate nextCallDate = calculateNextCallDate(lastCallDate,callFrequency);
+            CallFrequency callFrequency = callPlanner.getCallFrequency();
+            LocalDate nextCallDate = calculateNextCallDate(newLastCallDate, callFrequency);
 
-        callPlanner.setNextCallDate(nextCallDate);
+            callPlanner.setNextCallDate(nextCallDate);
 
-        callPlannerRepository.save(callPlanner);
+            callPlannerRepository.save(callPlanner);
+        } else {
+            System.out.println("Provided date is not later than the existing last call date for lead: " + lead.getId());
+        }
     }
+
 
     public List<Long> getLeadsRequiringCallToday() {
         LocalDate today = LocalDate.now();
@@ -73,16 +80,20 @@ public class CallPlannerService {
     public CallPlannerDTO updateCallFrequency(Long leadId, CallFrequency callFrequency) {
         CallPlanner callPlanner = callPlannerRepository.findByLeadId(leadId)
                 .orElseThrow(() -> new RuntimeException("Call planner not found for leadId: " + leadId));
-
         callPlanner.setCallFrequency(callFrequency);
-        callPlanner.setNextCallDate(calculateNextCallDate(LocalDate.now(), callFrequency));
+        LocalDate nextCallDate = calculateNextCallDate(callPlanner.getLastCallDate(), callFrequency);
+
+        // Next call date cannot be before today
+        if (nextCallDate.isBefore(LocalDate.now())) {
+            nextCallDate = LocalDate.now();
+        }
+        callPlanner.setNextCallDate(nextCallDate);
 
         callPlannerRepository.save(callPlanner);
-
         CallPlannerDTO callPlannerDTO = convertToDTO(callPlanner);
-
         return callPlannerDTO;
     }
+
 
 
 
