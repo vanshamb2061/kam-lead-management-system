@@ -4,6 +4,7 @@ import com.assessment.kam.model.Lead;
 import com.assessment.kam.model.PerformanceMetrics;
 import com.assessment.kam.repository.PerformanceMetricsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -16,9 +17,24 @@ public class OrderBasedPerformanceStrategy implements PerformanceStrategy {
     @Autowired
     private PerformanceMetricsRepository performanceMetricsRepository;
 
+    @Value("${performance.order.under-performing.threshold}")
+    private int underPerformingThreshold;
+
+    @Value("${performance.order.well-performing.threshold}")
+    private int wellPerformingThreshold;
+    @Override
+    public int getWellPerformingThreshold() {
+        return wellPerformingThreshold;
+    }
+
+    @Override
+    public int getUnderPerformingThreshold() {
+        return underPerformingThreshold;
+    }
+
     @Override
     public List<Long> getWellPerformingLeads() {
-        int orderThreshold = 50;
+        int orderThreshold = getWellPerformingThreshold();
         List<PerformanceMetrics> metrics = performanceMetricsRepository.findAll();
 
         List<Long> wellPerformingLeads = metrics.stream()
@@ -42,7 +58,7 @@ public class OrderBasedPerformanceStrategy implements PerformanceStrategy {
 
     @Override
     public List<Long> getUnderPerformingLeads() {
-        int orderThreshold = 50;
+        int orderThreshold = getUnderPerformingThreshold();
         List<PerformanceMetrics> metrics = performanceMetricsRepository.findAll();
 
         List<Long> wellPerformingLeads = metrics.stream()
