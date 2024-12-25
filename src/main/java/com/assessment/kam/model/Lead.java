@@ -45,6 +45,10 @@ public class Lead {
         this.pointsOfContact = pointsOfContact;
     }
 
+    public void addPointOfContact(PointOfContact pointOfContact){
+        this.pointsOfContact.add(pointOfContact);
+    }
+
     public void setStatus(LeadStatus status) {
         this.status = status;
     }
