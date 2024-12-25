@@ -25,6 +25,7 @@ import com.assessment.kam.service.LeadService;
 import com.assessment.kam.service.OrderService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -55,6 +56,9 @@ public class DataLoader {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @PostConstruct
     public void init() {
         loadMockData();
@@ -71,6 +75,14 @@ public class DataLoader {
         LeadDTO lead1 = leadService.createLead("Lead 1","Address 1", LeadStatus.NEW, Arrays.asList(pointOfContact1, pointOfContact2));
         LeadDTO lead2 = leadService.createLead("Lead 2","Address 2", LeadStatus.NEW, Arrays.asList(pointOfContact3));
         LeadDTO lead3 = leadService.createLead("Lead 3","Address 3", LeadStatus.FOLLOWUP, Arrays.asList(pointOfContact4, pointOfContact5, pointOfContact6));
+
+        String updateQuery1 = "UPDATE Call_Planner SET last_call_date = CURRENT_DATE - 6";
+        String updateQuery2 = "UPDATE Call_Planner SET next_call_date = CURRENT_DATE + 1";
+
+        jdbcTemplate.update(updateQuery1);
+        jdbcTemplate.update(updateQuery2);
+
+        System.out.println("CallPlanner dates updated successfully!");
 
         // Create sample interactions
         interactionService.createInteraction(new InteractionDTO(lead1.getId(), "Initial meeting scheduled.", LocalDateTime.now().minusDays(1)));
