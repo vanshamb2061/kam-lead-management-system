@@ -42,10 +42,7 @@ public class InteractionService {
     }
 
     public InteractionDTO convertToDTO(Interaction interaction){
-        InteractionDTO interactionDTO = new InteractionDTO();
-        interactionDTO.setDate(interaction.getDate());
-        interactionDTO.setDescription(interaction.getDescription());
-        interactionDTO.setLeadId(interaction.getLead().getId());
+        InteractionDTO interactionDTO = new InteractionDTO(interaction.getLead().getId(),interaction.getDescription(),interaction.getDate());
         return interactionDTO;
     }
 }
