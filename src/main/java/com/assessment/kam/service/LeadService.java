@@ -47,7 +47,7 @@ public class LeadService {
         }
         lead.setPointsOfContact(contacts);
         lead = leadRepository.save(lead);
-        //TODO: WEEKLY is default here, this can be updated by user later using update endpoint in callplannercontroller
+        // Note: WEEKLY is default here, it can be updated using updateStatus endpoint
         callPlannerService.createCallPlannerForLead(lead, CallFrequency.WEEKLY);
         return convertToDTO(lead);
     }

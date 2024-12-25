@@ -16,7 +16,6 @@ import java.util.List;
 
 @Service
 public class InteractionService {
-//TODO: Check for autowiring
     @Autowired
     private CallPlannerService callPlannerService;
 
