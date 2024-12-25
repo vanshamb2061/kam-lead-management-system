@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "3429aa0b-cc80-47c1-aaf5-4e5c4af289a5",
+		"name": "KAM - Lead Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25545606"
+	},
+	"item": [
+		{
+			"name": "Add Lead",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyODIxOCwiZXhwIjoxNzM1MTMxODE4fQ.jatVOITDPHYiDnWDBch5PycNINwOMll--aOLWqJKrrI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Pasta Place\",\n    \"address\": \"456 Food Town\",\n    \"status\": \"IN_PROGRESS\",\n    \"pointsOfContact\": [\n        {\n            \"name\": \"Person1\",\n            \"role\": \"MANAGER\",\n            \"email\": \"person1@email.com\",\n            \"phone\": \"1112223333\"\n        },\n        {\n            \"name\": \"Person2\",\n            \"role\": \"PURCHASING_MANAGER\",\n            \"email\": \"person2@email.com\",\n            \"phone\": \"4445556666\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/leads",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"leads"
+					]
+				},
+				"description": "Lead Management\n-> Add new restaurant leads\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Interaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyODIxOCwiZXhwIjoxNzM1MTMxODE4fQ.jatVOITDPHYiDnWDBch5PycNINwOMll--aOLWqJKrrI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"leadId\": 1,\n    \"pocId\": 2,\n    \"type\": \"Call\",\n    \"description\": \"Called for discounts\",\n    \"date\": \"2024-12-23T15:30:00\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/interactions/create?timezone=Asia/Kolkata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"interactions",
+						"create"
+					],
+					"query": [
+						{
+							"key": "timezone",
+							"value": "Asia/Kolkata"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get interactions for lead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyODIxOCwiZXhwIjoxNzM1MTMxODE4fQ.jatVOITDPHYiDnWDBch5PycNINwOMll--aOLWqJKrrI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/interactions/lead/2?timezone=Asia/Kolkata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"interactions",
+						"lead",
+						"2"
+					],
+					"query": [
+						{
+							"key": "timezone",
+							"value": "Asia/Kolkata"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Call frequency for Lead",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"callFrequency\": \"DAILY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/call-planner/update-frequency/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"call-planner",
+						"update-frequency",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Call Planner for Lead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/call-planner/:leadId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"call-planner",
+						":leadId"
+					],
+					"variable": [
+						{
+							"key": "leadId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get leads to call today",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/call-planner/leads-to-call-today",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"call-planner",
+						"leads-to-call-today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get last call date for lead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/call-planner/last-call/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"call-planner",
+						"last-call",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update lead status",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "newStatus",
+							"value": "FOLLOWUP",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/leads/1/update-status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"leads",
+						"1",
+						"update-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderDate\": \"2024-12-23T19:30:00\",\n    \"totalAmount\": 1007,\n    \"leadId\": 2\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update strategy for performance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/strategy?strategyType=revenue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"strategy"
+					],
+					"query": [
+						{
+							"key": "strategyType",
+							"value": "revenue"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get well performing leads",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/well-performing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"well-performing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get best N leads",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/well-performing/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"well-performing",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get underperforming leads",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/under-performing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"under-performing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get N worst leads",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/under-performing/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"under-performing",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get order date for a lead",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/orders/dates/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"orders",
+						"dates",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get order metrics for month",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTczNTEyOTY0NiwiZXhwIjoxNzM1MTMzMjQ2fQ.qTOjlCJr7oOzZ7FZhHnLlw0hc7DQXuqv7nfjLUhJXnc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/performance/orders/average-monthly/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"performance",
+						"orders",
+						"average-monthly",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Login | JWT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
