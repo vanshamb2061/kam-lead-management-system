@@ -81,10 +81,7 @@ The **KAM (Key Account Manager) Lead Management System** is a Spring Boot applic
 ## Running Instructions
 
 ### Development Environment
-1. Start the application:
-   ```bash
-   mvn spring-boot:run
-   ```
+1. Start the application
 2. Access the application:
     - API Base URL: `http://localhost:8080`
     - H2 Console (if enabled): `http://localhost:8080/h2-console`
@@ -113,12 +110,15 @@ All API requests require a JWT token for authentication. To obtain a token, use 
       }
       ```
     - **Response**: JWT token.
+    - Use the username and password in the Postman Collection for development/testing purpose.
 
 Example usage of the token:
 - Add the token in the `Authorization` header of subsequent API calls:
   ```
   Authorization: Bearer <JWT_TOKEN>
   ```
+
+---
 
 ### Lead Management
 - `POST /leads`: Create a new lead.
@@ -127,7 +127,7 @@ Example usage of the token:
       {
         "name": "string",
         "address": "string",
-        "status": "NEW | IN_PROGRESS | WON | LOST",
+        "status": "NEW | IN_PROGRESS | FOLLOWUP | WON | LOST",
         "pointsOfContact": [
           {
             "name": "string",
@@ -142,6 +142,11 @@ Example usage of the token:
 - `GET /leads/{id}`: Retrieve lead details by ID.
     - **Response**: Lead details including name, address, status, and POCs.
 - `GET /leads/{id}/status`: Get the status of a specific lead.
+- `PUT /leads/{id}/update-status`: Update the status of a specific lead.
+    - **Query Parameter**: `newStatus=NEW | IN_PROGRESS | FOLLOWUP | WON | LOST`
+    - **Response**: Updated lead details.
+
+---
 
 ### Call Planning
 - `PUT /call-planner/update-frequency/{leadId}`: Update call frequency for a lead.
@@ -156,8 +161,12 @@ Example usage of the token:
 - `GET /call-planner/last-call/{leadId}`: Retrieve the last call date for a lead.
 - `GET /call-planner/leads-to-call-today`: Get a list of leads requiring calls today.
 
+---
+
 ### Interaction Tracking
 - `POST /interactions/create`: Record a new interaction.
+    - **Request Parameters**:
+        - `timezone`: Timezone of the interaction.
     - **Request Body**:
       ```json
       {
@@ -166,8 +175,13 @@ Example usage of the token:
         "date": "YYYY-MM-DDTHH:mm:ss"
       }
       ```
-    - **Response**: Details of the created interaction.
+    - **Response**: Details of the created interaction with the date converted to UTC.
+    - Note: Use 'Asia/Kolkata' for India time zone.
 - `GET /interactions/lead/{leadId}`: Retrieve interactions for a specific lead.
+    - **Request Parameter**: `timezone`: Timezone to convert interaction dates to.
+    - **Response**: List of interactions with dates adjusted to the provided timezone.
+
+---
 
 ### Order Management
 - `POST /orders`: Create a new order.
@@ -181,53 +195,32 @@ Example usage of the token:
       ```
     - **Response**: Details of the created order.
 - `GET /orders/lead/{leadId}`: Get all orders associated with a lead.
+    - **Response**: List of orders for the specified lead.
+
+---
 
 ### Performance Metrics
 - `POST /performance/strategy`: Set the performance evaluation strategy.
-    - **Query Parameters**: `strategyType=revenue | orders`
+    - **Query Parameter**: `strategyType=revenue | orders`
     - **Response**: Confirmation of strategy update.
 - `GET /performance/well-performing`: Get a list of well-performing accounts.
+- `GET /performance/well-performing/{count}`: Get a specified number of well-performing accounts.
+    - **Path Parameter**: `count`: Number of accounts to retrieve.
 - `GET /performance/under-performing`: Get a list of underperforming accounts.
+- `GET /performance/under-performing/{count}`: Get a specified number of underperforming accounts.
+    - **Path Parameter**: `count`: Number of accounts to retrieve.
+- `GET /performance/orders/dates/{leadId}`: Retrieve order dates for a specific lead.
+- `GET /performance/orders/average-monthly/{leadId}`: Get the average number of orders per month for a specific lead.
 
 ---
 
 ## Sample Usage Examples
---TODO: Add postman here, and remove curl
-### Creating a New Lead
-```bash
-curl -X POST http://localhost:8080/leads \
--H "Content-Type: application/json" \
--d '{
-    "name": "Restaurant ABC",
-    "address": "123 Food Street",
-    "status": "NEW",
-    "pointsOfContact": [
-        {
-            "name": "John Doe",
-            "role": "Owner",
-            "email": "john@restaurantabc.com",
-            "phone": "1234567890"
-        }
-    ]
-}'
-```
+### Using Postman
+1. Import the provided Postman collection (`postman_collection.json`) into your Postman workspace.
+2. Use pre-configured requests to test each endpoint:
+    - Create leads.
+    - Update call frequencies.
+    - Record interactions.
+    - Fetch performance metrics.
+    - Authenticate and obtain JWT tokens.
 
-### Updating Call Frequency
-```bash
-curl -X PUT http://localhost:8080/call-planner/update-frequency/1 \
--H "Content-Type: application/json" \
--d '{
-    "callFrequency": "weekly"
-}'
-```
-
-### Recording an Interaction
-```bash
-curl -X POST http://localhost:8080/interactions/create \
--H "Content-Type: application/json" \
--d '{
-    "leadId": 1,
-    "description": "Initial meeting with owner",
-    "date": "2024-12-25T10:30:00"
-}'
-```
