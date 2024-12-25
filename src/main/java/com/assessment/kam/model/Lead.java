@@ -44,4 +44,8 @@ public class Lead {
     public void setPointsOfContact(List<PointOfContact> pointsOfContact) {
         this.pointsOfContact = pointsOfContact;
     }
+
+    public void setStatus(LeadStatus status) {
+        this.status = status;
+    }
 }

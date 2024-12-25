@@ -71,6 +71,18 @@ public class LeadService {
         return leadDTO.getStatus();
     }
 
+    @Transactional
+    public LeadDTO updateLeadStatus(Long leadID, LeadStatus leadStatus){
+        Optional<Lead> leadOptional = leadRepository.findById(leadID);
+        Lead lead = null;
+        if(leadOptional.isPresent()){
+            lead = leadOptional.get();
+            lead.setStatus(leadStatus);
+            leadRepository.save(lead);
+        }
+        return convertToDTO(lead);
+    }
+
 
     public LeadDTO convertToDTO(Lead lead) {
         LeadDTO leadDTO = new LeadDTO();

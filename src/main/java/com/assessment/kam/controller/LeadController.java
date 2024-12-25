@@ -26,6 +26,11 @@ class LeadController {
         return ResponseEntity.ok(leadService.getLeadStatus(id));
     }
 
+    @PutMapping("{id}/update-status")
+    public ResponseEntity<LeadDTO> updateLeadStatus(@PathVariable Long id, @RequestParam LeadStatus newStatus) {
+        return ResponseEntity.ok(leadService.updateLeadStatus(id, newStatus));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<LeadDTO> getLeadById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(leadService.getLeadDTOById(id));
