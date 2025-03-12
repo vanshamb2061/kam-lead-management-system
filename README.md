@@ -1,7 +1,7 @@
 # KAM Lead Management System
 
 ## Project Overview
-The **KAM (Key Account Manager) Lead Management System** is a Spring Boot application developed for Udaan's B2B e-commerce platform. It enables Key Account Managers to efficiently manage relationships with large restaurant accounts. The system provides comprehensive features including lead and contact management, interaction tracking, call planning, order tracking, and performance analytics.
+The **KAM (Key Account Manager) Lead Management System** is a Spring Boot application developed for any B2B e-commerce platform. It enables Key Account Managers to efficiently manage relationships with large restaurant accounts. The system provides comprehensive features including lead and contact management, interaction tracking, call planning, order tracking, and performance analytics.
 
 ### Key Features
 - **Lead Management**: Manage the entire lifecycle of leads (New → In Progress → Won/Lost).
